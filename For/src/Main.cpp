@@ -1,6 +1,7 @@
 #include <vector>
 #include <assert.h>
 #include <omp.h>
+#include <stdlib.h>
 
 /*
     this project test opm parallel for
