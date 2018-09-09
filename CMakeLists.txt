@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 #------------ project ------------
-PROJECT("OPENMPNGINE")
+PROJECT("OPENMPNGINE" CXX)
 
 #------------ variables ------------
 SET(openmpngine_src_dir "src")
@@ -30,6 +30,9 @@ FUNCTION(openmpngineTest)
         MESSAGE(FATAL_ERROR "Can't find OpenMP")
     ENDIF()
 
+    IF(UNIX)
+        TARGET_LINK_LIBRARIES(${openmpngine_current_name} PRIVATE ${OpenMP_CXX_FLAGS})
+    ENDIF(UNIX)
     TARGET_COMPILE_OPTIONS(${openmpngine_current_name} PRIVATE ${OpenMP_CXX_FLAGS})
 ENDFUNCTION()
 
