@@ -66,6 +66,46 @@ int main()
         }
     }
     //====================
+    //  Private
+    //====================
+    {
+        int max = omp_get_max_threads();
+        int threadnum = 0;
+        std::vector<int> arr(static_cast< std::vector< int >::size_type >(max));
+
+        #pragma omp parallel private(threadnum)
+        {
+            threadnum = omp_get_thread_num();
+            arr[omp_get_thread_num()] = threadnum;
+        }
+
+        assert(threadnum == 0);
+        for(int i=0 ; i<max; ++i)
+        {
+            assert(arr[static_cast< std::vector< int >::size_type >(i)] == i);
+        }
+    }
+    //====================
+    //  First private
+    //====================
+    {
+        int max = omp_get_max_threads();
+        int threadnum = max;
+        std::vector<int> arr(static_cast< std::vector< int >::size_type >(max));
+
+        #pragma omp parallel firstprivate(threadnum)
+        {
+            arr[omp_get_thread_num()] = threadnum;
+            threadnum = omp_get_thread_num();
+        }
+
+        assert(threadnum == max);
+        for(int i=0 ; i<max; ++i)
+        {
+            assert(arr[static_cast< std::vector< int >::size_type >(i)] == max);
+        }
+    }
+    //====================
     //  Reduction
     //====================
     {
