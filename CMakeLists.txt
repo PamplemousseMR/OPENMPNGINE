@@ -5,7 +5,6 @@ PROJECT("OPENMPNGINE" CXX)
 
 #------------ variables ------------
 SET(openmpngine_src_dir "src")
-SET(openmpngine_header_dir "include")
 
 FUNCTION(openmpngineTest)
     SET(openmpngine_oneValueArgs NAME)
@@ -13,15 +12,13 @@ FUNCTION(openmpngineTest)
 
     #------ find files ------
     FILE(GLOB_RECURSE openmpngine_src_files ${openmpngine_src_dir}/*)
-    FILE(GLOB_RECURSE openmpngine_header_files ${openmpngine_header_dir}/*)
 
     #------ create project ------
     GET_FILENAME_COMPONENT(openmpngine_current_name ${CMAKE_CURRENT_SOURCE_DIR} NAME)
     SET(openmpngine_current_name ${openmpngine_current_name} PARENT_SCOPE)
     SET(${VAR_NAME} ${openmpngine_current_name} PARENT_SCOPE)
 
-    ADD_EXECUTABLE(${openmpngine_current_name} ${openmpngine_src_files} ${openmpngine_header_files})
-    TARGET_INCLUDE_DIRECTORIES(${openmpngine_current_name} PRIVATE ${openmpngine_header_dir})
+    ADD_EXECUTABLE(${openmpngine_current_name} ${openmpngine_src_files})
 
     #------ find OpenMP ------
     FIND_PACKAGE("OpenMP")
