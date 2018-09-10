@@ -4,7 +4,12 @@
 #include <stdlib.h>
 
 /*
-    this project test opm parallel for
+                     [        omp parallel for        ]v
+    Thread 0: -------[<0 -> n\N>----------------------]*------
+    Thread 1:        [<n/N -> 2*n/N>------------------]*
+    Thread 2:        [<2*n/N -> 3*n/N>----------------]*
+    ...                                                *
+    Thread N-1:      [<n-n/N -> n>--------------------]*
 */
 int main()
 {

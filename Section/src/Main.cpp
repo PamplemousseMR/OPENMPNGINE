@@ -5,6 +5,12 @@
 
 /*
     this project test opm section
+                     [      omp parallel sections     ]v
+    Thread 0: -------[<           section 1          >]*------
+    Thread 1:        [<   section 2   >---------------]*
+    Thread 2:        [<      section 3      >---------]*
+    ...                                                *
+    Thread N-1:      [<section N>---------------------]*
 */
 int main()
 {

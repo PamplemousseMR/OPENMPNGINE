@@ -4,6 +4,12 @@
 #include <stdlib.h>
 /*
     this project test opm single
+                     [       omp parallel single      ]v
+    Thread 0: -------[--------------------------------]*------
+    Thread 1:        [-----------< single >-----------]*
+    Thread 2:        [--------------------------------]*
+    ...                                                *
+    Thread N-1:      [--------------------------------]*
 */
 int main()
 {
