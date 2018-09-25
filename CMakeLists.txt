@@ -1,26 +1,48 @@
+#========================================
+#	project
+#========================================
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
-
-#------------ project ------------
 PROJECT("OPENMPNGINE" CXX)
 
-#------------ variables ------------
+#================================================================================
+#		init
+#================================================================================
+
+#========================================
+#	variables
+#========================================
 SET(openmpngine_src_dir "src")
 
-FUNCTION(openmpngineTest)
-    SET(openmpngine_oneValueArgs NAME)
-    CMAKE_PARSE_ARGUMENTS(VAR "" ${openmpngine_oneValueArgs} "" ${ARGN})
+#========================================
+#	compiler specifications
+#========================================
+SET(CMAKE_CXX_STANDARD 14)
 
-    #------ find files ------
+#================================================================================
+#		create
+#================================================================================
+
+#========================================
+#	create one project by name
+#========================================
+FUNCTION(openmpngineTest)
+    #====================
+    #	find files
+    #====================
     FILE(GLOB_RECURSE openmpngine_src_files ${openmpngine_src_dir}/*)
 
-    #------ create project ------
+    #====================
+    #	create project
+    #====================
     GET_FILENAME_COMPONENT(openmpngine_current_name ${CMAKE_CURRENT_SOURCE_DIR} NAME)
     SET(openmpngine_current_name ${openmpngine_current_name} PARENT_SCOPE)
     SET(${VAR_NAME} ${openmpngine_current_name} PARENT_SCOPE)
 
     ADD_EXECUTABLE(${openmpngine_current_name} ${openmpngine_src_files})
 
-    #------ find OpenMP ------
+    #====================
+    #	find OpenMP
+    #====================
     FIND_PACKAGE("OpenMP")
 
     IF(NOT ${OPENMP_FOUND})
@@ -33,12 +55,10 @@ FUNCTION(openmpngineTest)
     TARGET_COMPILE_OPTIONS(${openmpngine_current_name} PRIVATE ${OpenMP_CXX_FLAGS})
 ENDFUNCTION()
 
-#------------ cmake variables ------------
-SET(CMAKE_CXX_STANDARD 14)
 
-#------------ create project ------------
-
-#------ find sub directories ------
+#========================================
+#	find subdirectories
+#========================================
 SET(openmpngine_project_dir "")
 
 FILE(GLOB openmpngine_glob_dir ./*)
@@ -48,7 +68,9 @@ FOREACH(openmpngine_dir ${openmpngine_glob_dir})
     ENDIF()
 ENDFOREACH()
 
-#------ generate project for each sub directories ------
+#========================================
+#	create projects
+#========================================
 FOREACH(openmpngine_dir ${openmpngine_project_dir})
     MESSAGE(INFO " generate project : " ${openmpngine_dir})
     ADD_SUBDIRECTORY(${openmpngine_dir})
