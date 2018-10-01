@@ -14,7 +14,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 - [OpenMP](https://www.openmp.org/) : The OpenMP API specification for parallel programming.
 
-### generate
+### Generation
 
 Generate using cmake: `cmake`.
 
