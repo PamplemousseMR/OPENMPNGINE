@@ -22,6 +22,15 @@ SET(CMAKE_CXX_STANDARD 14)
 #		create
 #================================================================================
 
+#====================
+#	find OpenMP
+#====================
+FIND_PACKAGE("OpenMP")
+
+IF(NOT ${OPENMP_FOUND})
+    MESSAGE(FATAL_ERROR "Can't find OpenMP")
+ENDIF()
+
 #========================================
 #	create one project by name
 #========================================
@@ -39,15 +48,6 @@ FUNCTION(openmpngineTest)
     SET(${VAR_NAME} ${openmpngine_current_name} PARENT_SCOPE)
 
     ADD_EXECUTABLE(${openmpngine_current_name} ${openmpngine_src_files})
-
-    #====================
-    #	find OpenMP
-    #====================
-    FIND_PACKAGE("OpenMP")
-
-    IF(NOT ${OPENMP_FOUND})
-        MESSAGE(FATAL_ERROR "Can't find OpenMP")
-    ENDIF()
 
     IF(UNIX)
         TARGET_LINK_LIBRARIES(${openmpngine_current_name} PRIVATE ${OpenMP_CXX_FLAGS})
