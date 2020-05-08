@@ -4,11 +4,6 @@ sudo: false
 matrix:
   include:
 
-    #============================================================
-    #
-    #                         Debug 
-    #
-    #============================================================
     #==============================
     #
     #          windows
@@ -16,7 +11,6 @@ matrix:
     #==============================
 
     - os: windows
-      env: MATRIX_EVAL="BUILD_TYPE=Debug"
 
     #==============================
     #
@@ -25,24 +19,29 @@ matrix:
     #==============================
 
     - os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.4
       compiler: gcc-4.9
-      env: MATRIX_EVAL="brew install gcc@4.9 && CXX=g++-4.9 && BUILD_TYPE=Debug"
+      env: MATRIX_EVAL="brew install gcc@4.9 && CXX=g++-4.9"
 
     - os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.4
       compiler: gcc-5
-      env: MATRIX_EVAL="brew install gcc@5 && CXX=g++-5 && BUILD_TYPE=Debug"
+      env: MATRIX_EVAL="brew install gcc@5 && CXX=g++-5"
 
     - os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.4
       compiler: gcc-6
-      env: MATRIX_EVAL="brew install gcc@6 && CXX=g++-6 && BUILD_TYPE=Debug"
+      env: MATRIX_EVAL="brew install gcc@6 && CXX=g++-6"
 
     - os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.4
       compiler: gcc-7
-      env: MATRIX_EVAL="brew install gcc@7 && CXX=g++-7 && BUILD_TYPE=Debug"
+      env: MATRIX_EVAL="brew install gcc@7 && CXX=g++-7"
+
+    - os: osx
+      osx_image: xcode11.4
+      compiler: gcc-8
+      env: MATRIX_EVAL="brew install gcc@8 && CXX=g++-8"
 
     #==============================
     #
@@ -51,36 +50,48 @@ matrix:
     #==============================
 
     #- os: osx
-    #  osx_image: xcode6.4
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Debug"
-
-    #- os: osx
-    #  osx_image: xcode7.3
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Debug"
-
-    #- os: osx
-    #  osx_image: xcode8
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Debug"
-
-    #- os: osx
     #  osx_image: xcode8.3
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Debug"
+    #  env: MATRIX_EVAL="CXX=clang++"
 
     #- os: osx
     #  osx_image: xcode9.2
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Debug"
+    #  env: MATRIX_EVAL="CXX=clang++"
 
     #- os: osx
     #  osx_image: xcode9.4
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Debug"
+    #  env: MATRIX_EVAL="CXX=clang++"
 
     #- os: osx
     #  osx_image: xcode10.1
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Debug"
+    #  env: MATRIX_EVAL="CXX=clang++"
 
     #- os: osx
     #  osx_image: xcode10.2
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Debug"
+    #  env: MATRIX_EVAL="CXX=clang++"
+
+    #- os: osx
+    #  osx_image: xcode10.3
+    #  env: MATRIX_EVAL="CXX=clang++"
+
+    #- os: osx
+    #  osx_image: xcode11
+    #  env: MATRIX_EVAL="CXX=clang++"
+
+    #- os: osx
+    #  osx_image: xcode11.1
+    #  env: MATRIX_EVAL="CXX=clang++"
+
+    #- os: osx
+    #  osx_image: xcode11.2
+    #  env: MATRIX_EVAL="CXX=clang++"
+
+    #- os: osx
+    #  osx_image: xcode11.3
+    #  env: MATRIX_EVAL="CXX=clang++"
+
+    #- os: osx
+    #  osx_image: xcode11.4
+    #  env: MATRIX_EVAL="CXX=clang++"
 
     #==============================
     #
@@ -90,216 +101,15 @@ matrix:
 
     - os: linux
       dist: xenial
-      compiler: gcc-4.9
+      compiler: gcc-4.8
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-4.9
-      env: MATRIX_EVAL="CXX=g++-4.9 && BUILD_TYPE=Debug"
-
-    - os: linux
-      dist: xenial
-      compiler: gcc-5
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5
-      env: MATRIX_EVAL="CXX=g++-5 && BUILD_TYPE=Debug"
-
-    - os: linux
-      dist: xenial
-      compiler: gcc-6
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-6
-      env: MATRIX_EVAL="CXX=g++-6 && BUILD_TYPE=Debug"
-
-    - os: linux
-      dist: xenial
-      compiler: gcc-7
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-7
-      env: MATRIX_EVAL="CXX=g++-7 && BUILD_TYPE=Debug"
-
-    - os: linux
-      dist: xenial
-      compiler: gcc-8
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-8
-      env: MATRIX_EVAL="CXX=g++-8 && BUILD_TYPE=Debug"
-
-    #==============================
-    #
-    #          linux clang 
-    #
-    #==============================
-
-    - os: linux
-      dist: xenial
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-3.7
-          packages:
-            - libomp-dev
-            - clang-3.7
-      dist: xenial
-      env:
-        - MATRIX_EVAL="CXX=clang++-3.7 && BUILD_TYPE=Debug"
-
-    - os: linux
-      dist: xenial
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-3.8
-          packages:
-            - libomp-dev
-            - clang-3.8
-      dist: xenial
-      env:
-        - MATRIX_EVAL="CXX=clang++-3.8 && sudo apt-get install libc++-dev && BUILD_TYPE=Debug"
-
-    - os: linux
-      dist: xenial
-      addons:
-        apt:
-          sources:
-            - llvm-toolchain-xenial-3.9
-          packages:
-            - libomp-dev
-            - clang-3.9
-      dist: xenial
-      env:
-        - MATRIX_EVAL="CXX=clang++-3.9 && sudo apt-get install libc++-dev && BUILD_TYPE=Debug"
-
-    - os: linux
-      dist: xenial
-      addons:
-        apt:
-          sources:
-            - llvm-toolchain-xenial-4.0
-          packages:
-            - libomp-dev
-            - clang-4.0
-      dist: xenial
-      env:
-        - MATRIX_EVAL="CXX=clang++-4.0 && BUILD_TYPE=Debug"
-
-    - os: linux
-      dist: xenial
-      addons:
-        apt:
-          sources:
-            - llvm-toolchain-xenial-5.0
-          packages:
-            - libomp-dev
-            - clang-5.0
-      dist: xenial
-      env:
-        - MATRIX_EVAL="CXX=clang++-5.0 && BUILD_TYPE=Debug"
-
-    #============================================================
-    #
-    #                         Release 
-    #
-    #============================================================
-    #==============================
-    #
-    #          windows
-    #
-    #==============================
-
-    - os: windows
-      env: MATRIX_EVAL="BUILD_TYPE=Release"
-
-    #==============================
-    #
-    #          osx gcc
-    #
-    #==============================
-
-    - os: osx
-      osx_image: xcode10.2
-      compiler: gcc-4.9
-      env: MATRIX_EVAL="brew install gcc@4.9 && CXX=g++-4.9 && BUILD_TYPE=Release"
-
-    - os: osx
-      osx_image: xcode10.2
-      compiler: gcc-5
-      env: MATRIX_EVAL="brew install gcc@5 && CXX=g++-5 && BUILD_TYPE=Release"
-
-    - os: osx
-      osx_image: xcode10.2
-      compiler: gcc-6
-      env: MATRIX_EVAL="brew install gcc@6 && CXX=g++-6 && BUILD_TYPE=Release"
-
-    - os: osx
-      osx_image: xcode10.2
-      compiler: gcc-7
-      env: MATRIX_EVAL="brew install gcc@7 && CXX=g++-7 && BUILD_TYPE=Release"
-
-    #==============================
-    #
-    #          osx clang
-    #
-    #==============================
-
-    #- os: osx
-    #  osx_image: xcode6.4
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Release"
-
-    #- os: osx
-    #  osx_image: xcode7.3
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Release"
-
-    #- os: osx
-    #  osx_image: xcode8
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Release"
-
-    #- os: osx
-    #  osx_image: xcode8.3
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Release"
-
-    #- os: osx
-    #  osx_image: xcode9.2
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Release"
-
-    #- os: osx
-    #  osx_image: xcode9.4
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Release"
-
-    #- os: osx
-    #  osx_image: xcode10.1
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Release"
-
-    #- os: osx
-    #  osx_image: xcode10.2
-    #  env: MATRIX_EVAL="CXX=clang++ && BUILD_TYPE=Release"
-
-    #==============================
-    #
-    #          linux gcc 
-    #
-    #==============================
-
+            - g++-4.8
+      env: MATRIX_EVAL="CXX=g++-4.8"
+      
     - os: linux
       dist: xenial
       compiler: gcc-4.9
@@ -309,8 +119,8 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-4.9
-      env: MATRIX_EVAL="CXX=g++-4.9 && BUILD_TYPE=Release"
-
+      env: MATRIX_EVAL="CXX=g++-4.9"
+      
     - os: linux
       dist: xenial
       compiler: gcc-5
@@ -320,8 +130,8 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-      env: MATRIX_EVAL="CXX=g++-5 && BUILD_TYPE=Release"
-
+      env: MATRIX_EVAL="CXX=g++-5"
+      
     - os: linux
       dist: xenial
       compiler: gcc-6
@@ -331,8 +141,8 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-6
-      env: MATRIX_EVAL="CXX=g++-6 && BUILD_TYPE=Release"
-
+      env: MATRIX_EVAL="CXX=g++-6"
+      
     - os: linux
       dist: xenial
       compiler: gcc-7
@@ -342,8 +152,8 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-7
-      env: MATRIX_EVAL="CXX=g++-7 && BUILD_TYPE=Release"
-
+      env: MATRIX_EVAL="CXX=g++-7"
+      
     - os: linux
       dist: xenial
       compiler: gcc-8
@@ -353,7 +163,18 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-8
-      env: MATRIX_EVAL="CXX=g++-8 && BUILD_TYPE=Release"
+      env: MATRIX_EVAL="CXX=g++-8"
+      
+    - os: linux
+      dist: xenial
+      compiler: gcc-9
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-9
+      env: MATRIX_EVAL="CXX=g++-9"
 
     #==============================
     #
@@ -361,59 +182,30 @@ matrix:
     #
     #==============================
 
-    - os: linux
-      dist: xenial
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-3.7
-          packages:
-            - libomp-dev
-            - clang-3.7
-      dist: xenial
-      env:
-        - MATRIX_EVAL="CXX=clang++-3.7 && BUILD_TYPE=Release"
+    #- os: linux
+    #  dist: xenial
+    #  addons:
+    #    apt:
+    #      sources:
+    #        - ubuntu-toolchain-r-test
+    #        - llvm-toolchain-precise-3.6
+    #      packages:
+    #        - clang-3.6
+    #        - libomp-dev
+    #  env:
+    #    - MATRIX_EVAL="CXX=clang++-3.6"
 
     - os: linux
       dist: xenial
       addons:
         apt:
           sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-3.8
+            - llvm-toolchain-trusty-4.0
           packages:
-            - libomp-dev
-            - clang-3.8
-      dist: xenial
-      env:
-        - MATRIX_EVAL="CXX=clang++-3.8 && sudo apt-get install libc++-dev && BUILD_TYPE=Release"
-
-    - os: linux
-      dist: xenial
-      addons:
-        apt:
-          sources:
-            - llvm-toolchain-xenial-3.9
-          packages:
-            - libomp-dev
-            - clang-3.9
-      dist: xenial
-      env:
-        - MATRIX_EVAL="CXX=clang++-3.9 && sudo apt-get install libc++-dev && BUILD_TYPE=Release"
-
-    - os: linux
-      dist: xenial
-      addons:
-        apt:
-          sources:
-            - llvm-toolchain-xenial-4.0
-          packages:
-            - libomp-dev
             - clang-4.0
-      dist: xenial
+            - libomp-dev
       env:
-        - MATRIX_EVAL="CXX=clang++-4.0 && BUILD_TYPE=Release"
+        - MATRIX_EVAL="CXX=clang++-4.0"
 
     - os: linux
       dist: xenial
@@ -422,20 +214,35 @@ matrix:
           sources:
             - llvm-toolchain-xenial-5.0
           packages:
-            - libomp-dev
             - clang-5.0
-      dist: xenial
+            - libomp-dev
       env:
-        - MATRIX_EVAL="CXX=clang++-5.0 && BUILD_TYPE=Release"
+        - MATRIX_EVAL="CXX=clang++-5.0"
+
+    - os: linux
+      dist: xenial
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-xenial-6.0
+          packages:
+            - clang-6.0
+            - libomp-dev
+      env:
+        - MATRIX_EVAL="CXX=clang++-6.0"
 
 before_install:
   - eval ${MATRIX_EVAL}
 
 before_script:
   - cd ${TRAVIS_BUILD_DIR}/..  
-  - mkdir build
-  - cd build
-  - cmake ${TRAVIS_BUILD_DIR} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_COMPILER=${CXX}
-  
+  - mkdir build_debug
+  - mkdir build_release
+
 script:
+  - cd build_debug
+  - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=${CXX} ${TRAVIS_BUILD_DIR} 
+  - cmake --build .
+  - cd ../build_release
+  - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${CXX} ${TRAVIS_BUILD_DIR} 
   - cmake --build .
