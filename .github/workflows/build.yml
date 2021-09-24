@@ -1,0 +1,76 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.OS }}
+
+    strategy:
+      matrix:
+        name: [ubuntu_18-04_g++4-8, ubuntu_18-04_g++5, ubuntu_18-04_g++6, ubuntu_18-04_g++7, ubuntu_18-04_g++8, 
+               ubuntu_20-04_g++7, ubuntu_20-04_g++8, ubuntu_20-04_g++9, ubuntu_20-04_g++10]
+        include:
+        - name: ubuntu_18-04_g++4-8
+          OS: ubuntu-18.04
+          COMPILER: g++-4.8
+
+        - name: ubuntu_18-04_g++5
+          OS: ubuntu-18.04
+          COMPILER: g++-5
+
+        - name: ubuntu_18-04_g++6
+          OS: ubuntu-18.04
+          COMPILER: g++-6
+
+        - name: ubuntu_18-04_g++7
+          OS: ubuntu-18.04
+          COMPILER: g++-7
+
+        - name: ubuntu_18-04_g++8
+          OS: ubuntu-18.04
+          COMPILER: g++-8
+
+        - name: ubuntu_20-04_g++7
+          OS: ubuntu-20.04
+          COMPILER: g++-7
+
+        - name: ubuntu_20-04_g++8
+          OS: ubuntu-20.04
+          COMPILER: g++-8
+
+        - name: ubuntu_20-04_g++9
+          OS: ubuntu-20.04
+          COMPILER: g++-9
+
+        - name: ubuntu_20-04_g++10
+          OS: ubuntu-20.04
+          COMPILER: g++-10
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Package
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+              sudo apt-get update
+              sudo apt-get --assume-yes install ${{ matrix.COMPILER }}
+          elif [ "$RUNNER_OS" == "Windows" ]; then
+              echo "$RUNNER_OS not supported"
+              exit 1
+          else
+              echo "$RUNNER_OS not supported"
+              exit 1
+          fi
+
+      - name: Configure
+        run: |
+          cmake -B ${{github.workspace}}/build_debug -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=${{ matrix.COMPILER }}
+          cmake -B ${{github.workspace}}/build_release -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${{ matrix.COMPILER }}
+
+      - name: Build
+        run: |
+          cmake --build ${{github.workspace}}/build_debug
+          cmake --build ${{github.workspace}}/build_release

@@ -2,9 +2,9 @@
 
 OpenMP sandbox.
 
-## Travis
+## CI
 
-[![Build Status](https://travis-ci.com/PamplemousseMR/OPENMPNGINE.svg?branch=master)](https://travis-ci.com/PamplemousseMR/OPENMPNGINE)
+![Build Status](https://github.com/PamplemousseMR/OPENMPNGINE/actions/workflows/build.yml/badge.svg)
 
 ## Getting Started
 
