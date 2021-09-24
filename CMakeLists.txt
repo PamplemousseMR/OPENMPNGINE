@@ -1,77 +1,39 @@
-#========================================
-#	project
-#========================================
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
-PROJECT("OPENMPNGINE" CXX)
+#=======================================
+#                PROJECT
+#=======================================
 
-#================================================================================
-#		init
-#================================================================================
+cmake_minimum_required(VERSION 3.0)
+project("OPENMPNGINE")
 
-#========================================
-#	variables
-#========================================
-SET(openmpngine_src_dir "src")
+#=======================================
+#               LIBRARIES
+#=======================================
 
-#========================================
-#	compiler specifications
-#========================================
-SET(CMAKE_CXX_STANDARD 14)
+FIND_PACKAGE("OpenMP" REQUIRED)
 
-#================================================================================
-#		create
-#================================================================================
+#=======================================
+#                SAMPLES
+#=======================================
 
-#====================
-#	find OpenMP
-#====================
-FIND_PACKAGE("OpenMP")
+function(add_sample)
+    set(options "")
+    set(singleValues "")
+    set(multipleValues SOURCES)
 
-IF(NOT ${OPENMP_FOUND})
-    MESSAGE(FATAL_ERROR "Can't find OpenMP")
-ENDIF()
+    cmake_parse_arguments(SAMPLE "${options}" "${singleValues}" "${multipleValues}" ${ARGN})
 
-#========================================
-#	create one project by name
-#========================================
-FUNCTION(openmpngineTest)
-    #====================
-    #	find files
-    #====================
-    FILE(GLOB_RECURSE openmpngine_src_files ${openmpngine_src_dir}/*)
+    get_filename_component(openmpngine_current_name ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-    #====================
-    #	create project
-    #====================
-    GET_FILENAME_COMPONENT(openmpngine_current_name ${CMAKE_CURRENT_SOURCE_DIR} NAME)
-    SET(openmpngine_current_name ${openmpngine_current_name} PARENT_SCOPE)
-    SET(${VAR_NAME} ${openmpngine_current_name} PARENT_SCOPE)
+    add_executable(${openmpngine_current_name} ${SAMPLE_SOURCES})
+    set_target_properties(${openmpngine_current_name} PROPERTIES CXX_STANDARD 14)
 
-    ADD_EXECUTABLE(${openmpngine_current_name} ${openmpngine_src_files})
+    if(UNIX)
+        target_link_libraries(${openmpngine_current_name} PRIVATE ${OpenMP_CXX_FLAGS})
+    endif(UNIX)
+    target_compile_options(${openmpngine_current_name} PRIVATE ${OpenMP_CXX_FLAGS})
+endfunction()
 
-    IF(UNIX)
-        TARGET_LINK_LIBRARIES(${openmpngine_current_name} PRIVATE ${OpenMP_CXX_FLAGS})
-    ENDIF(UNIX)
-    TARGET_COMPILE_OPTIONS(${openmpngine_current_name} PRIVATE ${OpenMP_CXX_FLAGS})
-ENDFUNCTION()
-
-
-#========================================
-#	find subdirectories
-#========================================
-SET(openmpngine_project_dir "")
-
-FILE(GLOB openmpngine_glob_dir ./*)
-FOREACH(openmpngine_dir ${openmpngine_glob_dir})
-    IF((IS_DIRECTORY ${openmpngine_dir}) AND (NOT ${openmpngine_dir} MATCHES ".*git"))
-        LIST(APPEND openmpngine_project_dir ${openmpngine_dir})
-    ENDIF()
-ENDFOREACH()
-
-#========================================
-#	create projects
-#========================================
-FOREACH(openmpngine_dir ${openmpngine_project_dir})
-    MESSAGE(INFO " generate project : " ${openmpngine_dir})
-    ADD_SUBDIRECTORY(${openmpngine_dir})
-ENDFOREACH()
+add_subdirectory("For")
+add_subdirectory("Parallel")
+add_subdirectory("Section")
+add_subdirectory("Single")
