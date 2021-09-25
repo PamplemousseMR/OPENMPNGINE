@@ -9,7 +9,7 @@ project("OPENMPNGINE")
 #               LIBRARIES
 #=======================================
 
-FIND_PACKAGE("OpenMP" REQUIRED)
+find_package("OpenMP" REQUIRED)
 
 #=======================================
 #                SAMPLES
