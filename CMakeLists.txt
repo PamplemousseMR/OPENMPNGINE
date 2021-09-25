@@ -26,11 +26,7 @@ function(add_sample)
 
     add_executable(${openmpngine_current_name} ${SAMPLE_SOURCES})
     set_target_properties(${openmpngine_current_name} PROPERTIES CXX_STANDARD 14)
-
-    if(UNIX)
-        target_link_libraries(${openmpngine_current_name} PRIVATE ${OpenMP_CXX_FLAGS})
-    endif(UNIX)
-    target_compile_options(${openmpngine_current_name} PRIVATE ${OpenMP_CXX_FLAGS})
+    target_link_libraries(${openmpngine_current_name} PRIVATE OpenMP::OpenMP_CXX)
 endfunction()
 
 add_subdirectory("For")
